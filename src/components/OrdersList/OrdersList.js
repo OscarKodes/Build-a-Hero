@@ -1,10 +1,10 @@
 import React from "react";
-import EditOrder from "./EditOrder/EditOrder";
+import OrderCard from "./OrderCard/OrderCard";
 
 const ordersList = () => (
     <div>
         <h1>Orders List</h1>
-        <EditOrder />
+        <OrderCard />
     </div>
 )
 
