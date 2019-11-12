@@ -1,9 +1,18 @@
 const router = require("express").Router();
 const Product = require("../models/product.js");
 
-// INDEX ROUTE 
-router.get("/", (req, res) => {
-    Product.find({}, (err, foundProducts) => {
+// INDEX ROUTE // Dynamic Index Route with search functionality
+router.get("/search", (req, res) => {
+
+    let keyword = req.query.keyword;
+
+    Product.
+    find({
+        $or: [
+            {"title": new RegExp(keyword, 'i')},
+            {"description": new RegExp(keyword, 'i')}
+        ]
+    }, (err, foundProducts) => {
         if (err) {
             res.status(400).json("Error: " + err);
         } else {
