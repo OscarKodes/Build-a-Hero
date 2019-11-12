@@ -2,8 +2,8 @@ import React from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.module.css';
-import OrdersList from './components/OrdersList/OrdersList';
-import ProductsList from './components/ProductsList/ProductsList';
+import OrdersList from './containers/OrdersList/OrdersList';
+import ProductsList from './containers/ProductsList/ProductsList';
 import Navbar from './components/Navbar/Navbar';
 
 const App = () => {

@@ -1,7 +1,7 @@
 import React from "react";
-import SearchBar from "./SearchBar/SearchBar";
-import ProductCard from "./ProductCard/ProductCard";
-import ShoppingCart from "./ShoppingCart/ShoppingCart";
+import SearchBar from "../../components/SearchBar/SearchBar";
+import ProductCard from "../../components/ProductCard/ProductCard";
+import ShoppingCart from "../../components/ShoppingCart/ShoppingCart";
 
 const productsList = () => (
     <div>
