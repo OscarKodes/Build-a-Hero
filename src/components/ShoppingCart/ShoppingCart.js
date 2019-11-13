@@ -9,8 +9,9 @@ const shoppingCart = (props) => {
             return (
                 <div key={product._id}>
                     <p>
-                        {product.title}
+                        {product.title} - {product.price}
                     </p>
+                    <button onClick={() => props.removeHandler(product)}>Remove</button>
                 </div>
             )
         })
@@ -19,7 +20,14 @@ const shoppingCart = (props) => {
     return (
         <div>
             <h3>Shopping Cart</h3>
+            <input 
+                type="text" 
+                placeholder="Hero Name" 
+                value={props.heroName} 
+                onChange={props.heroNameChangeHandler} />
             {allCart}
+            <strong>Grand Total: {props.totalCost}</strong>
+            <button onClick={props.purchaseHandler}>Purchase</button>
         </div>
     )
 }

@@ -5,7 +5,7 @@ const ProductCard = (props) => (
         <p>{props.product.title}</p>
         <p>{props.product.description}</p>
         <p>{props.product.price}</p>
-        <button onClick={() => props.click(props.product)}>Add to Cart</button>
+        <button onClick={() => props.addHandler(props.product)}>Add to Cart</button>
     </div>
 )
 

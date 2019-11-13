@@ -9,7 +9,9 @@ class ProductsList extends Component {
     state = {
         searchText: "",
         products: {},
-        cart: []
+        cart: [],
+        totalCost: 0,
+        heroName: ""
     }
 
     componentDidMount() {
@@ -32,10 +34,43 @@ class ProductsList extends Component {
             });
     }
 
+    heroNameChangeHandler = (event) => {
+        this.setState({heroName: event.target.value});
+    }
+
     cartAddHandler = (product) => {
         let newCart = [...this.state.cart];
         newCart.push(product);
-        this.setState({cart: newCart});
+        let newPrice = this.state.totalCost + product.price;
+        this.setState({
+            cart: newCart,
+            totalCost: newPrice
+        });
+    }
+
+    cartRemoveHandler = (product) => {
+        let newCart = [...this.state.cart];
+        let idx = newCart.indexOf(product);
+        newCart.splice(idx, 1);
+        let newPrice = this.state.totalCost - product.price;
+        this.setState({
+            cart: newCart,
+            totalCost: newPrice
+        });
+    }
+
+    purchaseHandler = () => {
+
+        let purchasedHero = {
+            name: this.state.heroName,
+            products: this.state.cart,
+            totalCost: this.state.totalCost
+        }
+
+        axios.post("http://localhost:5000/orders", purchasedHero)
+        .then(res => console.log(res.data));
+
+        window.location = "/orders";
     }
 
     render() {
@@ -48,7 +83,7 @@ class ProductsList extends Component {
                     <ProductCard 
                         key={product._id} 
                         product={product}
-                        click={this.cartAddHandler}/>
+                        addHandler={this.cartAddHandler}/>
                 )
             })
         }
@@ -60,7 +95,12 @@ class ProductsList extends Component {
                     onChangeHandler={this.textChangeHandler}
                     onSubmitHandler={this.submitTextHandler} />
                 {allProducts}
-                <ShoppingCart cart={this.state.cart} />
+                <ShoppingCart 
+                    cart={this.state.cart}
+                    totalCost={this.state.totalCost}
+                    removeHandler={this.cartRemoveHandler}
+                    purchaseHandler={this.purchaseHandler}
+                    heroNameChangeHandler={this.heroNameChangeHandler} />
             </div>
         )
     }
