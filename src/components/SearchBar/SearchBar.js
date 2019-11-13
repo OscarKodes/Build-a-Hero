@@ -5,7 +5,8 @@ const searchBar = (props) => (
         <input 
             type="text" 
             value={props.searchText} 
-            onChange={props.onChangeHandler} />
+            onChange={props.onChangeHandler}
+            placeholder="Search Products" />
         <button type="submit">Submit</button>
     </form>
 )
