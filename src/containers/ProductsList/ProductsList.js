@@ -21,11 +21,11 @@ class ProductsList extends Component {
             });
     }
 
-    textChangeHandler = (event) => {
+    searchTextChangeHandler = (event) => {
         this.setState({searchText: event.target.value})
     }
 
-    submitTextHandler = (event) => {
+    submitSearchTextHandler = (event) => {
         event.preventDefault();
 
         axios.get("http://localhost:5000/products/search/?keyword=" + this.state.searchText)
@@ -92,8 +92,10 @@ class ProductsList extends Component {
             <div>
                 <SearchBar 
                     searchText={this.state.searchText}
-                    onChangeHandler={this.textChangeHandler}
-                    onSubmitHandler={this.submitTextHandler} />
+                    onChangeHandler={this.searchTextChangeHandler}
+                    onSubmitHandler={this.submitSearchTextHandler}>
+                    Search Products
+                </SearchBar>
                 {allProducts}
                 <ShoppingCart 
                     cart={this.state.cart}
