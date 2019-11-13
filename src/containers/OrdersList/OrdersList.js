@@ -1,15 +1,30 @@
 import React, {Component} from "react";
 import axios from "axios";
 import OrderCard from "../../components/OrderCard/OrderCard";
+import SearchBar from "../../components/SearchBar/SearchBar";
 
 class OrdersList extends Component {
 
     state = {
-        orders: []
+        orders: [],
+        searchText: ""
     }
 
     componentDidMount() {
-        axios.get("http://localhost:5000/orders")
+        axios.get("http://localhost:5000/orders/search/?keyword=")
+            .then(res => {
+                this.setState({orders: res.data});
+            });
+    }
+
+    searchTextChangeHandler = (event) => {
+        this.setState({searchText: event.target.value})
+    }
+
+    submitSearchTextHandler = (event) => {
+        event.preventDefault();
+
+        axios.get("http://localhost:5000/orders/search/?keyword=" + this.state.searchText)
             .then(res => {
                 this.setState({orders: res.data});
             });
@@ -39,6 +54,12 @@ class OrdersList extends Component {
         return (
             <div>
                 <h1>Orders List</h1>
+                <SearchBar
+                    onChangeHandler={this.searchTextChangeHandler}
+                    searchText={this.state.searchText}
+                    onSubmitHandler={this.submitSearchTextHandler}>
+                    Search Order
+                </SearchBar>
                 {allOrders}
             </div>
         )

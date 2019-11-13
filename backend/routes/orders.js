@@ -2,9 +2,12 @@ const router = require("express").Router();
 const Order = require("../models/order.js");
 
 // INDEX ROUTE 
-router.get("/", (req, res) => {
+router.get("/search", (req, res) => {
+
+    let keyword = req.query.keyword;
+
     Order.
-    find({}).
+    find({"name": new RegExp(keyword, 'i')}).
     populate("products").
     exec((err, foundOrders) => {
         if (err) {
