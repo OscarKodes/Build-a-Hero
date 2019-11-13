@@ -3,7 +3,10 @@ const Order = require("../models/order.js");
 
 // INDEX ROUTE 
 router.get("/", (req, res) => {
-    Order.find({}, (err, foundOrders) => {
+    Order.
+    find({}).
+    populate("products").
+    exec((err, foundOrders) => {
         if (err) {
             res.status(400).json("Error: " + err);
         } else {
