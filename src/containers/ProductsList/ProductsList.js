@@ -68,7 +68,7 @@ class ProductsList extends Component {
         }
 
         axios.post("http://localhost:5000/orders", purchasedHero)
-        .then(res => console.log(res.data));
+            .then(res => console.log(res.data));
 
         window.location = "/orders";
     }

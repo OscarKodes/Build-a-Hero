@@ -31,6 +31,7 @@ const OrderCard = (props) => {
             <p>Hero Name: {props.order.name}</p>
             {allProducts}
             <strong>Grand Total: {props.order.totalCost}</strong>
+            <button onClick={() => props.onClickHandler(props.order._id)}>Delete Order</button>
         </div>
     )
 

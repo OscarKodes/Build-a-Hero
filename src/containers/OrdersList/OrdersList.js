@@ -30,6 +30,15 @@ class OrdersList extends Component {
             });
     }
 
+    deleteOrderHandler = (orderId) => {
+
+        axios.delete("http://localhost:5000/orders/" + orderId)
+            .then(res => console.log(res.data));
+        this.setState({
+            orders: this.state.orders.filter(order => order._id !== orderId)
+        });
+    }
+
     render () {
 
         let allOrders = null;
@@ -46,7 +55,8 @@ class OrdersList extends Component {
                 return (
                 <OrderCard 
                     key={order._id} 
-                    order={order} />
+                    order={order}
+                    onClickHandler={this.deleteOrderHandler} />
                 )
             })
         }
