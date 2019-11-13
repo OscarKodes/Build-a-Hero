@@ -11,7 +11,8 @@ class ProductsList extends Component {
         products: {},
         cart: [],
         totalCost: 0,
-        heroName: ""
+        heroName: "",
+        showCart: false
     }
 
     componentDidMount() {
@@ -29,9 +30,13 @@ class ProductsList extends Component {
         event.preventDefault();
 
         axios.get("http://localhost:5000/products/search/?keyword=" + this.state.searchText)
-            .then(res => {
-                this.setState({products: res.data});
-            });
+            .then(res => this.setState({products: res.data}));
+    }
+
+    cartToggleHandler = () => {
+        this.setState((prevState) => {
+            return {showCart: !prevState.showCart}
+        });
     }
 
     heroNameChangeHandler = (event) => {
@@ -39,21 +44,35 @@ class ProductsList extends Component {
     }
 
     cartAddHandler = (product) => {
+        // // Remove product from current list of shown products
+        // let productIdx = this.state.products.indexOf(product);
+        // let newProducts = this.state.products;
+        // newProducts.splice(productIdx, 1); 
+
+        // Add price and the clicked product to the cart
+        let newPrice = this.state.totalCost + product.price;
         let newCart = [...this.state.cart];
         newCart.push(product);
-        let newPrice = this.state.totalCost + product.price;
         this.setState({
+            // products: newProducts,
             cart: newCart,
             totalCost: newPrice
         });
     }
 
     cartRemoveHandler = (product) => {
+        // // Add the product back into the list of products
+        // let newProducts = [product, ...this.state.products];
+
+        // Splice the product out of the cart list
         let newCart = [...this.state.cart];
         let idx = newCart.indexOf(product);
         newCart.splice(idx, 1);
+
+        // Subtract the price
         let newPrice = this.state.totalCost - product.price;
         this.setState({
+            // products: newProducts,
             cart: newCart,
             totalCost: newPrice
         });
@@ -90,6 +109,9 @@ class ProductsList extends Component {
 
         return (
             <div>
+                <h1>Products List</h1>
+                <p>{this.state.cart.length} Item(s) in Cart</p>
+                <button onClick={this.cartToggleHandler}>Show Shopping Cart</button>
                 <SearchBar 
                     searchText={this.state.searchText}
                     onChangeHandler={this.searchTextChangeHandler}
@@ -99,6 +121,7 @@ class ProductsList extends Component {
                 {allProducts}
                 <ShoppingCart 
                     cart={this.state.cart}
+                    showCart={this.state.showCart}
                     totalCost={this.state.totalCost}
                     removeHandler={this.cartRemoveHandler}
                     purchaseHandler={this.purchaseHandler}
